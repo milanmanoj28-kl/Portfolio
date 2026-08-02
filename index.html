@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milan Manoj — Data Analyst & AI/ML</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6E9D8;
+    --cream-soft:#FBF3E7;
+    --card-line:#E8D9C0;
+    --ink:#1E2430;
+    --ink-soft:#5B5A54;
+    --orange:#F5A623;
+    --orange-deep:#C9760F;
+    --blue:#5C82A8;
+    --green:#6FA477;
+    --radius:14px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{ font-family:'Space Grotesk',sans-serif; }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; }
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,233,216,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--card-line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{ font-weight:700; font-size:1.05rem; letter-spacing:-0.01em; }
+  .brand span{ color:var(--orange-deep); }
+  .navlinks{ display:flex; gap:28px; font-size:0.88rem; font-weight:500; color:var(--ink-soft); }
+  .navlinks a:hover{ color:var(--ink); }
+  .navlinks a:focus-visible, a:focus-visible{ outline:2px solid var(--orange-deep); outline-offset:3px; border-radius:4px; }
+
+  /* HERO */
+  .hero{ padding:88px 0 40px; position:relative; overflow:hidden; }
+  .hero::before{
+    content:""; position:absolute; top:-140px; left:-160px;
+    width:420px; height:420px; border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, var(--orange) 0%, rgba(245,166,35,0) 70%);
+    opacity:0.55; pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--orange-deep); font-weight:600; margin-bottom:14px;
+  }
+  .hero h1{ font-size:clamp(2.6rem, 6vw, 4.4rem); font-weight:700; letter-spacing:-0.02em; }
+  .hero h1 .accent{ color:var(--orange); }
+  .hero p.tag{ font-size:1.2rem; color:var(--ink-soft); margin-top:14px; max-width:560px; }
+  .hero .cta-row{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-block; padding:11px 22px; border-radius:999px; font-weight:600; font-size:0.9rem;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{ background:var(--ink); color:var(--cream); }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 6px 16px rgba(30,36,48,0.25); }
+  .btn-ghost{ border:1.5px solid var(--ink); color:var(--ink); }
+  .btn-ghost:hover{ background:var(--ink); color:var(--cream); }
+
+  /* TICKER — signature element: real result metrics scrolling like a data feed */
+  .ticker-outer{
+    margin-top:48px; border-top:1px solid var(--card-line); border-bottom:1px solid var(--card-line);
+    background:var(--cream-soft); overflow:hidden;
+  }
+  .ticker-track{
+    display:flex; gap:40px; white-space:nowrap; width:max-content;
+    animation:scroll 42s linear infinite;
+    padding:14px 0;
+  }
+  .ticker-track span{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--ink); }
+  .ticker-track span b{ color:var(--orange-deep); }
+  @keyframes scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  @media (prefers-reduced-motion:reduce){ .ticker-track{ animation:none; } }
+
+  /* SECTIONS */
+  section{ padding:76px 0; }
+  .section-head{ margin-bottom:36px; }
+  .section-head .eyebrow{ margin-bottom:6px; }
+  .section-head h2{ font-size:2rem; font-weight:700; letter-spacing:-0.01em; }
+
+  #about p{ max-width:680px; color:var(--ink-soft); font-size:1.02rem; }
+  #about .facts{ margin-top:24px; display:flex; gap:32px; flex-wrap:wrap; }
+  #about .facts div{ font-size:0.85rem; color:var(--ink-soft); }
+  #about .facts b{ display:block; font-family:'Space Grotesk',sans-serif; font-size:1.05rem; color:var(--ink); }
+
+  /* PROJECT CARDS */
+  .projects-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:20px; }
+  .card{
+    background:var(--cream-soft); border:1px solid var(--card-line); border-radius:var(--radius);
+    padding:22px; display:flex; flex-direction:column; gap:12px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{ transform:translateY(-4px); box-shadow:0 10px 24px rgba(30,36,48,0.08); }
+  .card h3{ font-size:1.08rem; font-weight:600; letter-spacing:-0.01em; }
+  .card p{ font-size:0.88rem; color:var(--ink-soft); flex-grow:1; }
+  .metric-badge{
+    align-self:flex-start; background:var(--ink); color:var(--cream);
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; padding:5px 10px; border-radius:6px;
+  }
+  .tags{ display:flex; flex-wrap:wrap; gap:6px; }
+  .tags span{
+    font-size:0.72rem; padding:4px 9px; border-radius:6px; border:1px solid var(--card-line);
+    color:var(--ink-soft);
+  }
+  .card a.gh{ font-size:0.85rem; font-weight:600; color:var(--orange-deep); margin-top:4px; }
+  .card a.gh:hover{ text-decoration:underline; }
+
+  /* SKILLS */
+  .skill-groups{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:26px; }
+  .skill-groups h4{ font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--orange-deep); margin-bottom:10px; font-weight:700; }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{ font-size:0.82rem; padding:6px 12px; border-radius:999px; background:var(--cream-soft); border:1px solid var(--card-line); }
+
+  /* EXPERIENCE TIMELINE */
+  .timeline{ border-left:2px solid var(--card-line); padding-left:28px; display:flex; flex-direction:column; gap:34px; }
+  .timeline .item{ position:relative; }
+  .timeline .item::before{
+    content:""; position:absolute; left:-34px; top:4px; width:11px; height:11px; border-radius:50%;
+    background:var(--orange); border:2px solid var(--cream);
+  }
+  .timeline .item .role{ font-weight:700; font-size:1.02rem; }
+  .timeline .item .meta{ font-size:0.82rem; color:var(--ink-soft); margin-bottom:8px; font-family:'JetBrains Mono',monospace; }
+  .timeline .item ul{ padding-left:18px; color:var(--ink-soft); font-size:0.9rem; display:flex; flex-direction:column; gap:4px; }
+
+  /* CERTS */
+  .cert-list{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+  .cert-list li{ list-style:none; font-size:0.88rem; padding:12px 16px; background:var(--cream-soft); border:1px solid var(--card-line); border-radius:10px; }
+
+  /* FOOTER */
+  footer{ padding:56px 0 70px; border-top:1px solid var(--card-line); }
+  footer h2{ font-size:1.7rem; font-weight:700; margin-bottom:10px; }
+  footer p{ color:var(--ink-soft); margin-bottom:22px; max-width:480px; }
+  .contact-row{ display:flex; gap:16px; flex-wrap:wrap; }
+  .foot-bottom{ margin-top:50px; font-size:0.78rem; color:var(--ink-soft); }
+
+  @media (max-width:640px){
+    .navlinks{ display:none; }
+    .hero{ padding:64px 0 30px; }
+  }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">Milan <span>Manoj</span></div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Data Analyst · Business Analyst · AI/ML</div>
+    <h1>Turning data into<br><span class="accent">decisions.</span></h1>
+    <p class="tag">MSc in Data Science &amp; Analytics. Nine projects across marketing, retail, fintech, and applied ML — built to find the number that changes the decision.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">View projects</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+  <div class="ticker-outer">
+    <div class="ticker-track" id="tickerTrack">
+      <!-- duplicated via JS for seamless loop -->
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">About</div>
+      <h2>A generalist by training, a specialist by habit</h2>
+    </div>
+    <p class="reveal">I work end-to-end with data — cleaning and validating it, writing SQL and Python to analyze it, and building Tableau and Power BI dashboards that make it usable for decisions. My project work spans applied ML (churn classification, customer segmentation, anomaly detection) and business-facing analytics (marketing spend, retail pricing, fintech risk), alongside internship experience turning raw engineering and telemetry data into structured, reportable formats.</p>
+    <p class="reveal">Currently looking at Data Analyst, Business Analyst, Data Science, and adjacent roles across India and the UAE — open to whichever team fits best.</p>
+    <div class="facts reveal">
+      <div><b>MSc</b>Data Science &amp; Analytics, Jain University</div>
+      <div><b>BSc</b>Statistics, Sree Sankara College (MG University)</div>
+      <div><b>Based in</b>Bengaluru &amp; Kochi</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Projects</div>
+      <h2>Nine problems, nine datasets</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="card reveal">
+        <span class="metric-badge">1.1B+ impressions analyzed</span>
+        <h3>Marketing Campaign Performance Analysis</h3>
+        <p>200K+ AdTech records across 6 channels, tracing 109M+ clicks back to a 14.04% average CTR.</p>
+        <div class="tags"><span>SQL</span><span>Excel</span><span>Tableau</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Marketing-Campaign-Performance-Analysis" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="card reveal">
+        <span class="metric-badge">Window fns · RANK · CTEs</span>
+        <h3>Customer Behaviour Analysis</h3>
+        <p>Retail SQL analysis using window functions and CTEs, surfacing a counter-intuitive discount-effectiveness insight.</p>
+        <div class="tags"><span>Python</span><span>SQL</span><span>Power BI</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/customer_behaviour_analysis" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="card reveal">
+        <span class="metric-badge">$2.3M+ sales tracked</span>
+        <h3>Retail Pricing &amp; Profitability Intelligence</h3>
+        <p>9,978 records engineered into risk scores and profit-margin features, isolating $286K in profit drivers.</p>
+        <div class="tags"><span>Python</span><span>SQL</span><span>Tableau</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/retail-profit-intelligence-analysis" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="card reveal">
+        <span class="metric-badge">0.9921 ROC-AUC</span>
+        <h3>Fintech Customer Risk &amp; Behaviour Intelligence</h3>
+        <p>K-Means segmentation into 4 groups, XGBoost churn classification, and Ridge/Lasso credit-limit regression with hypothesis testing.</p>
+        <div class="tags"><span>Python</span><span>Scikit-learn</span><span>XGBoost</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Fintech-Customer-Risk-Behaviour-Intelligence" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="card reveal">
+        <span class="metric-badge">600x efficiency gap found</span>
+        <h3>Cross-Channel Media Intelligence</h3>
+        <p>3,051 weekly records across 26 divisions and 4 channels; Z-score flagging caught 267 anomalies and a Q4 spike to 131M vs. a ~47M average.</p>
+        <div class="tags"><span>Python</span><span>SQL</span><span>Matplotlib/Seaborn</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/cross-channel-media-intelligence" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="card reveal">
+        <span class="metric-badge">71% logistic accuracy</span>
+        <h3>Behavioural Risk Analysis &amp; Anomaly Detection</h3>
+        <p>A unified pipeline — KNN regression, logistic regression, and K-Means (K=5) — engineered into anomaly scores that surfaced high-risk and high-spend segments.</p>
+        <div class="tags"><span>Python</span><span>Scikit-learn</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Behavioural-Risk-Analysis-and-Anomaly-Detection-Using-Machine-Learning-Techniques" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="card reveal">
+        <span class="metric-badge">RAG · v1</span>
+        <h3>AI-Powered RAG Document Q&amp;A System</h3>
+        <p>A retrieval-augmented Q&amp;A API over documents, served through FastAPI with ChromaDB and Groq.</p>
+        <div class="tags"><span>FastAPI</span><span>Docker</span><span>ChromaDB</span><span>Groq</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/RAG-Based-Document-QA-API" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="card reveal">
+        <span class="metric-badge">RAG · v2 / agentic</span>
+        <h3>Agentic RAG Assistant</h3>
+        <p>An upgraded assistant with LangChain 1.0, live web search, conversational memory, and dynamic file upload — with a Streamlit chat UI.</p>
+        <div class="tags"><span>LangChain</span><span>FastAPI</span><span>Groq LLaMA 3.1</span><span>Tavily</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Agentic-RAG-Assistant" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+      <div class="card reveal">
+        <span class="metric-badge">76% accuracy</span>
+        <h3>Audio Sound Classifier</h3>
+        <p>ESC-50 sound classification comparing MFCC baselines against YAMNet transfer learning, deployed as a Flask app.</p>
+        <div class="tags"><span>PyTorch</span><span>YAMNet</span><span>Flask</span></div>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Audio-Sound-Classifier" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Skills</div>
+      <h2>Toolkit</h2>
+    </div>
+    <div class="skill-groups">
+      <div class="reveal">
+        <h4>Languages &amp; Analysis</h4>
+        <div class="chip-row">
+          <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">R</span><span class="chip">SAS</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <h4>BI &amp; Visualization</h4>
+        <div class="chip-row">
+          <span class="chip">Tableau</span><span class="chip">Power BI</span><span class="chip">Advanced Excel</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <h4>ML &amp; AI</h4>
+        <div class="chip-row">
+          <span class="chip">Scikit-learn</span><span class="chip">XGBoost</span><span class="chip">Machine Learning</span><span class="chip">LangChain</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <h4>Cloud &amp; Data Infra</h4>
+        <div class="chip-row">
+          <span class="chip">AWS</span><span class="chip">BigQuery</span><span class="chip">Snowflake</span><span class="chip">MongoDB</span><span class="chip">Docker</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <h4>Tools &amp; Practices</h4>
+        <div class="chip-row">
+          <span class="chip">Git</span><span class="chip">JIRA</span><span class="chip">Agile</span><span class="chip">Data Governance</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Experience</div>
+      <h2>Where the data came from</h2>
+    </div>
+    <div class="timeline">
+      <div class="item reveal">
+        <div class="role">Data Analyst Intern — Techzia Solutions LLP</div>
+        <div class="meta">Bengaluru · Feb 2026 – Jul 2026</div>
+        <ul>
+          <li>Analyzed a 58,862-row vehicle telemetry dataset using Excel, Python, and Power BI to surface driving-behavior patterns</li>
+          <li>Analyzed real-world sensor data collected from an IoT prototype vehicle</li>
+          <li>Assisted a team member with IoT sensor-integration tasks</li>
+        </ul>
+      </div>
+      <div class="item reveal">
+        <div class="role">Documentation Intern — Almiya Engineering Consultants Pvt Ltd</div>
+        <div class="meta">Kochi, Kerala · Jun 2025 – Jul 2025</div>
+        <ul>
+          <li>Sourced, cleaned, and validated 50+ engineering project records using Python and Excel</li>
+          <li>Built interactive Tableau dashboards to track and communicate project progress to stakeholders</li>
+          <li>Maintained structured documentation artefacts aligned with project timelines</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Certifications</div>
+      <h2>Continued learning</h2>
+    </div>
+    <ul class="cert-list">
+      <li class="reveal">Databases and SQL for Data Science with Python — IBM</li>
+      <li class="reveal">Foundations of Machine Learning — Coursera</li>
+      <li class="reveal">AWS Cloud Practitioner Essentials — AWS</li>
+      <li class="reveal">Data Analytics with SAS — Jain University Bangalore</li>
+      <li class="reveal">Data Visualization with R — IBM</li>
+      <li class="reveal">Data Analytics Job Simulation — Deloitte (Forage)</li>
+      <li class="reveal">Excel and Copilot Fundamentals — Microsoft</li>
+      <li class="reveal">Probability Theory: Foundation for Data Science — CU Boulder</li>
+    </ul>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's talk data.</h2>
+    <p>Open to Data Analyst, Business Analyst, and Data Science roles across India and the UAE.</p>
+    <div class="contact-row">
+      <a class="btn btn-primary" href="mailto:milanmanoj28@gmail.com">milanmanoj28@gmail.com</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/milan-manoj-1a9a60274" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/milanmanoj28-kl" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="foot-bottom">© 2026 Milan Manoj. Built with data, coffee, and a little bit of stubbornness.</div>
+  </div>
+</footer>
+
+<script>
+  // Build the ticker from real project metrics, duplicated for a seamless loop
+  const stats = [
+    "1.1B+ <b>impressions</b> analyzed",
+    "0.9921 <b>ROC-AUC</b> churn model",
+    "267 <b>anomalies</b> flagged via Z-score",
+    "600x <b>efficiency gap</b> uncovered",
+    "$2.3M+ <b>sales</b> analyzed",
+    "58,862 <b>telemetry rows</b> processed",
+    "9,978 <b>records</b> risk-scored",
+    "14.04% <b>avg CTR</b> across 6 channels"
+  ];
+  const track = document.getElementById('tickerTrack');
+  const html = stats.map(s => `<span>${s}</span>`).join('');
+  track.innerHTML = html + html; // duplicate for seamless scroll
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
