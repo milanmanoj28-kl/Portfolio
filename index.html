@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Milan Manoj — Data Analyst & AI/ML</title>
+<title>Milan Manoj: Data Analyst & AI/ML</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -28,6 +28,7 @@
     font-family:'Inter',sans-serif;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
   h1,h2,h3,.display{ font-family:'Space Grotesk',sans-serif; }
   .mono{ font-family:'JetBrains Mono',monospace; }
@@ -48,7 +49,13 @@
   .brand{ font-weight:700; font-size:1.05rem; letter-spacing:-0.01em; }
   .brand span{ color:var(--orange-deep); }
   .navlinks{ display:flex; gap:28px; font-size:0.88rem; font-weight:500; color:var(--ink-soft); }
+  .navlinks a{ position:relative; padding:4px 0; }
+  .navlinks a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background:var(--orange-deep); transition:width .25s ease;
+  }
   .navlinks a:hover{ color:var(--ink); }
+  .navlinks a:hover::after{ width:100%; }
   .navlinks a:focus-visible, a:focus-visible{ outline:2px solid var(--orange-deep); outline-offset:3px; border-radius:4px; }
 
   /* HERO */
@@ -58,6 +65,11 @@
     width:420px; height:420px; border-radius:50%;
     background:radial-gradient(circle at 30% 30%, var(--orange) 0%, rgba(245,166,35,0) 70%);
     opacity:0.55; pointer-events:none;
+    animation:floatBlob 10s ease-in-out infinite;
+  }
+  @keyframes floatBlob{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(24px,18px) scale(1.06); }
   }
   .eyebrow{
     font-family:'JetBrains Mono',monospace; font-size:0.78rem; letter-spacing:0.12em;
@@ -67,9 +79,21 @@
   .hero h1 .accent{ color:var(--orange); }
   .hero p.tag{ font-size:1.2rem; color:var(--ink-soft); margin-top:14px; max-width:560px; }
   .hero .cta-row{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
+
+  .hero-fade{ opacity:0; transform:translateY(18px); animation:fadeUp .7s ease forwards; }
+  .hero-fade.d1{ animation-delay:.05s; }
+  .hero-fade.d2{ animation-delay:.18s; }
+  .hero-fade.d3{ animation-delay:.31s; }
+  .hero-fade.d4{ animation-delay:.44s; }
+  @keyframes fadeUp{ to{ opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion:reduce){
+    .hero-fade{ animation:none; opacity:1; transform:none; }
+    .hero::before{ animation:none; }
+  }
+
   .btn{
     display:inline-block; padding:11px 22px; border-radius:999px; font-weight:600; font-size:0.9rem;
-    transition:transform .15s ease, box-shadow .15s ease;
+    transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease;
     border:none; cursor:pointer; font-family:'Inter',sans-serif;
   }
   .btn-primary{ background:var(--ink); color:var(--cream); }
@@ -79,7 +103,7 @@
   .btn-download{ background:var(--orange-deep); color:var(--cream-soft); }
   .btn-download:hover{ transform:translateY(-2px); box-shadow:0 6px 16px rgba(201,118,15,0.3); }
 
-  /* TICKER — signature element: real result metrics scrolling like a data feed */
+  /* TICKER: signature element, real result metrics scrolling like a data feed */
   .ticker-outer{
     margin-top:48px; border-top:1px solid var(--card-line); border-bottom:1px solid var(--card-line);
     background:var(--cream-soft); overflow:hidden;
@@ -89,6 +113,7 @@
     animation:scroll 42s linear infinite;
     padding:14px 0;
   }
+  .ticker-track:hover{ animation-play-state:paused; }
   .ticker-track span{ font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--ink); }
   .ticker-track span b{ color:var(--orange-deep); }
   @keyframes scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
@@ -110,28 +135,33 @@
   .card{
     background:var(--cream-soft); border:1px solid var(--card-line); border-radius:var(--radius);
     padding:22px; display:flex; flex-direction:column; gap:12px;
-    transition:transform .15s ease, box-shadow .15s ease;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
-  .card:hover{ transform:translateY(-4px); box-shadow:0 10px 24px rgba(30,36,48,0.08); }
+  .card:hover{ transform:translateY(-6px); box-shadow:0 14px 28px rgba(30,36,48,0.1); border-color:var(--orange); }
   .card h3{ font-size:1.08rem; font-weight:600; letter-spacing:-0.01em; }
   .card p{ font-size:0.88rem; color:var(--ink-soft); flex-grow:1; }
   .metric-badge{
     align-self:flex-start; background:var(--ink); color:var(--cream);
     font-family:'JetBrains Mono',monospace; font-size:0.72rem; padding:5px 10px; border-radius:6px;
+    transition:transform .2s ease, background-color .2s ease;
   }
+  .card:hover .metric-badge{ background:var(--orange-deep); transform:scale(1.04); }
   .tags{ display:flex; flex-wrap:wrap; gap:6px; }
   .tags span{
     font-size:0.72rem; padding:4px 9px; border-radius:6px; border:1px solid var(--card-line);
     color:var(--ink-soft);
   }
-  .card a.gh{ font-size:0.85rem; font-weight:600; color:var(--orange-deep); margin-top:4px; }
+  .card a.gh{ font-size:0.85rem; font-weight:600; color:var(--orange-deep); margin-top:4px; display:inline-flex; align-items:center; gap:5px; }
   .card a.gh:hover{ text-decoration:underline; }
+  .card a.gh .arrow{ display:inline-block; transition:transform .2s ease; }
+  .card a.gh:hover .arrow{ transform:translateX(4px); }
 
   /* SKILLS */
   .skill-groups{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:26px; }
   .skill-groups h4{ font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--orange-deep); margin-bottom:10px; font-weight:700; }
   .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
-  .chip{ font-size:0.82rem; padding:6px 12px; border-radius:999px; background:var(--cream-soft); border:1px solid var(--card-line); }
+  .chip{ font-size:0.82rem; padding:6px 12px; border-radius:999px; background:var(--cream-soft); border:1px solid var(--card-line); transition:transform .15s ease, background-color .15s ease, color .15s ease; }
+  .chip:hover{ background:var(--ink); color:var(--cream); transform:translateY(-2px); }
 
   /* EXPERIENCE TIMELINE */
   .timeline{ border-left:2px solid var(--card-line); padding-left:28px; display:flex; flex-direction:column; gap:34px; }
@@ -139,14 +169,17 @@
   .timeline .item::before{
     content:""; position:absolute; left:-34px; top:4px; width:11px; height:11px; border-radius:50%;
     background:var(--orange); border:2px solid var(--cream);
+    transition:transform .2s ease;
   }
+  .timeline .item:hover::before{ transform:scale(1.35); }
   .timeline .item .role{ font-weight:700; font-size:1.02rem; }
   .timeline .item .meta{ font-size:0.82rem; color:var(--ink-soft); margin-bottom:8px; font-family:'JetBrains Mono',monospace; }
   .timeline .item ul{ padding-left:18px; color:var(--ink-soft); font-size:0.9rem; display:flex; flex-direction:column; gap:4px; }
 
   /* CERTS */
   .cert-list{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
-  .cert-list li{ list-style:none; font-size:0.88rem; padding:12px 16px; background:var(--cream-soft); border:1px solid var(--card-line); border-radius:10px; }
+  .cert-list li{ list-style:none; font-size:0.88rem; padding:12px 16px; background:var(--cream-soft); border:1px solid var(--card-line); border-radius:10px; transition:transform .15s ease, border-color .15s ease; }
+  .cert-list li:hover{ transform:translateX(4px); border-color:var(--orange); }
 
   /* CONTACT FORM */
   .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
@@ -163,8 +196,9 @@
     font-family:'Inter',sans-serif; font-size:0.9rem; padding:10px 12px;
     border:1px solid var(--card-line); border-radius:8px; background:var(--cream);
     color:var(--ink); resize:vertical;
+    transition:border-color .15s ease, box-shadow .15s ease;
   }
-  .field input:focus, .field textarea:focus{ outline:2px solid var(--orange-deep); outline-offset:1px; }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--orange-deep); box-shadow:0 0 0 3px rgba(201,118,15,0.15); }
   .form-status{ font-size:0.85rem; margin-top:10px; display:none; }
   .form-status.ok{ color:var(--green); display:block; }
   .form-status.err{ color:#B4453A; display:block; }
@@ -181,8 +215,8 @@
     .hero{ padding:64px 0 30px; }
   }
 
-  /* reveal on scroll */
-  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+  /* reveal on scroll, staggered via inline transition-delay set in JS */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .55s ease, transform .55s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
 </style>
 </head>
@@ -203,12 +237,12 @@
 
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">Data Analyst · Business Analyst · AI/ML</div>
-    <h1>Turning data into<br><span class="accent">decisions.</span></h1>
-    <p class="tag">MSc in Data Science &amp; Analytics. Nine projects across marketing, retail, fintech, and applied ML — built to find the number that changes the decision.</p>
-    <div class="cta-row">
+    <div class="eyebrow hero-fade d1">Data Analyst · Business Analyst · AI/ML</div>
+    <h1 class="hero-fade d2">Turning data into<br><span class="accent">decisions.</span></h1>
+    <p class="tag hero-fade d3">MSc in Data Science &amp; Analytics. Nine projects across marketing, retail, fintech, and applied ML, built to find the number that changes the decision.</p>
+    <div class="cta-row hero-fade d4">
       <a class="btn btn-primary" href="#projects">View projects</a>
-      <a class="btn btn-download" href="Milan_Manoj_Resume.pdf" download="Milan_Manoj_Resume.pdf">Download resume ↓</a>
+      <a class="btn btn-download" href="resume.pdf" download="Milan_Manoj_Resume.pdf">Download resume ↓</a>
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
     </div>
   </div>
@@ -225,8 +259,8 @@
       <div class="eyebrow">About</div>
       <h2>A generalist by training, a specialist by habit</h2>
     </div>
-    <p class="reveal">I work end-to-end with data — cleaning and validating it, writing SQL and Python to analyze it, and building Tableau and Power BI dashboards that make it usable for decisions. My project work spans applied ML (churn classification, customer segmentation, anomaly detection) and business-facing analytics (marketing spend, retail pricing, fintech risk), alongside internship experience turning raw engineering and telemetry data into structured, reportable formats.</p>
-    <p class="reveal">Currently looking at Data Analyst, Business Analyst, Data Science, and adjacent roles across India and the UAE — open to whichever team fits best.</p>
+    <p class="reveal">I work end-to-end with data: cleaning and validating it, writing SQL and Python to analyze it, and building Tableau and Power BI dashboards that make it usable for decisions. My project work spans applied ML (churn classification, customer segmentation, anomaly detection) and business-facing analytics (marketing spend, retail pricing, fintech risk), alongside internship experience turning raw engineering and telemetry data into structured, reportable formats.</p>
+    <p class="reveal">Currently looking at Data Analyst, Business Analyst, Data Science, and adjacent roles across India and the UAE, open to whichever team fits best.</p>
     <div class="facts reveal">
       <div><b>MSc</b>Data Science &amp; Analytics, Jain University</div>
       <div><b>BSc</b>Statistics, Sree Sankara College (MG University)</div>
@@ -248,7 +282,7 @@
         <h3>Marketing Campaign Performance Analysis</h3>
         <p>200K+ AdTech records across 6 channels, tracing 109M+ clicks back to a 14.04% average CTR.</p>
         <div class="tags"><span>SQL</span><span>Excel</span><span>Tableau</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/Marketing-Campaign-Performance-Analysis" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Marketing-Campaign-Performance-Analysis" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
       <div class="card reveal">
@@ -256,7 +290,7 @@
         <h3>Customer Behaviour Analysis</h3>
         <p>Retail SQL analysis using window functions and CTEs, surfacing a counter-intuitive discount-effectiveness insight.</p>
         <div class="tags"><span>Python</span><span>SQL</span><span>Power BI</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/customer_behaviour_analysis" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/customer_behaviour_analysis" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
       <div class="card reveal">
@@ -264,7 +298,7 @@
         <h3>Retail Pricing &amp; Profitability Intelligence</h3>
         <p>9,978 records engineered into risk scores and profit-margin features, isolating $286K in profit drivers.</p>
         <div class="tags"><span>Python</span><span>SQL</span><span>Tableau</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/retail-profit-intelligence-analysis" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/retail-profit-intelligence-analysis" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
       <div class="card reveal">
@@ -272,7 +306,7 @@
         <h3>Fintech Customer Risk &amp; Behaviour Intelligence</h3>
         <p>K-Means segmentation into 4 groups, XGBoost churn classification, and Ridge/Lasso credit-limit regression with hypothesis testing.</p>
         <div class="tags"><span>Python</span><span>Scikit-learn</span><span>XGBoost</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/Fintech-Customer-Risk-Behaviour-Intelligence" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Fintech-Customer-Risk-Behaviour-Intelligence" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
       <div class="card reveal">
@@ -280,15 +314,15 @@
         <h3>Cross-Channel Media Intelligence</h3>
         <p>3,051 weekly records across 26 divisions and 4 channels; Z-score flagging caught 267 anomalies and a Q4 spike to 131M vs. a ~47M average.</p>
         <div class="tags"><span>Python</span><span>SQL</span><span>Matplotlib/Seaborn</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/cross-channel-media-intelligence" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/cross-channel-media-intelligence" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
       <div class="card reveal">
         <span class="metric-badge">71% logistic accuracy</span>
         <h3>Behavioural Risk Analysis &amp; Anomaly Detection</h3>
-        <p>A unified pipeline — KNN regression, logistic regression, and K-Means (K=5) — engineered into anomaly scores that surfaced high-risk and high-spend segments.</p>
+        <p>A unified pipeline combining KNN regression, logistic regression, and K-Means (K=5), engineered into anomaly scores that surfaced high-risk and high-spend segments.</p>
         <div class="tags"><span>Python</span><span>Scikit-learn</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/Behavioural-Risk-Analysis-and-Anomaly-Detection-Using-Machine-Learning-Techniques" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Behavioural-Risk-Analysis-and-Anomaly-Detection-Using-Machine-Learning-Techniques" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
       <div class="card reveal">
@@ -296,15 +330,15 @@
         <h3>AI-Powered RAG Document Q&amp;A System</h3>
         <p>A retrieval-augmented Q&amp;A API over documents, served through FastAPI with ChromaDB and Groq.</p>
         <div class="tags"><span>FastAPI</span><span>Docker</span><span>ChromaDB</span><span>Groq</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/RAG-Based-Document-QA-API" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/RAG-Based-Document-QA-API" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
       <div class="card reveal">
         <span class="metric-badge">RAG · v2 / agentic</span>
         <h3>Agentic RAG Assistant</h3>
-        <p>An upgraded assistant with LangChain 1.0, live web search, conversational memory, and dynamic file upload — with a Streamlit chat UI.</p>
+        <p>An upgraded assistant with LangChain 1.0, live web search, conversational memory, and dynamic file upload, with a Streamlit chat UI.</p>
         <div class="tags"><span>LangChain</span><span>FastAPI</span><span>Groq LLaMA 3.1</span><span>Tavily</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/Agentic-RAG-Assistant" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Agentic-RAG-Assistant" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
       <div class="card reveal">
@@ -312,7 +346,7 @@
         <h3>Audio Sound Classifier</h3>
         <p>ESC-50 sound classification comparing MFCC baselines against YAMNet transfer learning, deployed as a Flask app.</p>
         <div class="tags"><span>PyTorch</span><span>YAMNet</span><span>Flask</span></div>
-        <a class="gh" href="https://github.com/milanmanoj28-kl/Audio-Sound-Classifier" target="_blank" rel="noopener">View on GitHub →</a>
+        <a class="gh" href="https://github.com/milanmanoj28-kl/Audio-Sound-Classifier" target="_blank" rel="noopener">View on GitHub <span class="arrow">→</span></a>
       </div>
 
     </div>
@@ -335,7 +369,7 @@
       <div class="reveal">
         <h4>BI &amp; Visualization</h4>
         <div class="chip-row">
-          <span class="chip">Tableau</span><span class="chip">Power BI</span><span class="chip">Advanced Excel</span>
+          <span class="chip">Tableau</span><span class="chip">Power BI</span><span class="chip">DAX</span><span class="chip">Advanced Excel</span>
         </div>
       </div>
       <div class="reveal">
@@ -368,7 +402,7 @@
     </div>
     <div class="timeline">
       <div class="item reveal">
-        <div class="role">Data Analyst Intern — Techzia Solutions LLP</div>
+        <div class="role">Data Analyst Intern, Techzia Solutions LLP</div>
         <div class="meta">Bengaluru · Feb 2026 – Jul 2026</div>
         <ul>
           <li>Analyzed a 58,862-row vehicle telemetry dataset (temporal driving actions and tracking errors across 15 columns) using Excel, Python, and Power BI to surface trends in velocity, steering, acceleration, and error metrics</li>
@@ -377,7 +411,7 @@
         </ul>
       </div>
       <div class="item reveal">
-        <div class="role">Documentation Intern — Almiya Engineering Consultants Pvt Ltd</div>
+        <div class="role">Documentation Intern, Almiya Engineering Consultants Pvt Ltd</div>
         <div class="meta">Kochi, Kerala · Jun 2025 – Jul 2025</div>
         <ul>
           <li>Sourced, cleaned, and validated 50+ engineering project records using Python and Excel</li>
@@ -396,14 +430,14 @@
       <h2>Continued learning</h2>
     </div>
     <ul class="cert-list">
-      <li class="reveal">Databases and SQL for Data Science with Python — IBM</li>
-      <li class="reveal">Foundations of Machine Learning — Coursera</li>
-      <li class="reveal">AWS Cloud Practitioner Essentials — AWS</li>
-      <li class="reveal">Data Analytics with SAS — Jain University Bangalore</li>
-      <li class="reveal">Data Visualization with R — IBM</li>
-      <li class="reveal">Data Analytics Job Simulation — Deloitte (Forage)</li>
-      <li class="reveal">Excel and Copilot Fundamentals — Microsoft</li>
-      <li class="reveal">Probability Theory: Foundation for Data Science — CU Boulder</li>
+      <li class="reveal">Databases and SQL for Data Science with Python, IBM</li>
+      <li class="reveal">Foundations of Machine Learning, Coursera</li>
+      <li class="reveal">AWS Cloud Practitioner Essentials, AWS</li>
+      <li class="reveal">Data Analytics with SAS, Jain University Bangalore</li>
+      <li class="reveal">Data Visualization with R, IBM</li>
+      <li class="reveal">Data Analytics Job Simulation, Deloitte (Forage)</li>
+      <li class="reveal">Excel and Copilot Fundamentals, Microsoft</li>
+      <li class="reveal">Probability Theory: Foundation for Data Science, CU Boulder</li>
     </ul>
   </div>
 </section>
@@ -442,7 +476,7 @@
         </form>
       </div>
     </div>
-    <div class="foot-bottom">© 2026 Milan Manoj. Built with data, coffee, and a little bit of stubbornness.</div>
+    <div class="foot-bottom">© 2026 Milan Manoj. Built with data and coffee.</div>
   </div>
 </footer>
 
@@ -459,16 +493,24 @@
     "14.04% <b>avg CTR</b> across 6 channels"
   ];
   const track = document.getElementById('tickerTrack');
-  const html = stats.map(s => `<span>${s}</span>`).join('');
-  track.innerHTML = html + html; // duplicate for seamless scroll
+  const tickerHtml = stats.map(s => `<span>${s}</span>`).join('');
+  track.innerHTML = tickerHtml + tickerHtml; // duplicate for seamless scroll
 
-  // Scroll reveal
+  // Scroll reveal with a small stagger per group
+  const parentIndex = new Map();
+  document.querySelectorAll('.reveal').forEach(el => {
+    const parent = el.parentElement;
+    const i = parentIndex.get(parent) || 0;
+    el.style.transitionDelay = Math.min(i * 70, 420) + 'ms';
+    parentIndex.set(parent, i + 1);
+  });
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // Contact form — submits to Formspree without leaving the page
+  // Contact form, submits to Formspree without leaving the page
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
   form.addEventListener('submit', async (e) => {
@@ -482,7 +524,7 @@
         headers: { 'Accept': 'application/json' }
       });
       if (res.ok) {
-        status.textContent = "Thanks — message sent!";
+        status.textContent = "Thanks, message sent!";
         status.className = 'form-status ok';
         form.reset();
       } else {
